@@ -61,11 +61,9 @@ class GameUI {
             starsDisplay: document.getElementById('stars-display'),
             
             // Controls
-            themeToggle: document.getElementById('theme-toggle'),
+            themeToggle: document.getElementById('themeToggle'),
             musicToggle: document.getElementById('music-toggle'),
             soundToggle: document.getElementById('sound-toggle'),
-            pauseBtn: document.getElementById('pause-btn'),
-            helpBtn: document.getElementById('help-btn'),
             
             // Buttons
             restartGame: document.getElementById('restart-game'),
@@ -1133,23 +1131,9 @@ class GameUI {
             this.elements.levelCompleteModal,
             this.elements.pauseModal,
             this.elements.instructionsModal
-        ].forEach(modal => modal?.classList.add('hidden'));
-    }
-
-    /**
-     * Theme management
-     */
-    toggleTheme() {
-        this.theme = this.theme === 'light' ? 'dark' : 'light';
-        this.applyTheme();
-        this.saveSettings();
-    }
-
-    applyTheme() {
-        document.documentElement.setAttribute('data-theme', this.theme);
-        if (this.elements.themeToggle) {
-            this.elements.themeToggle.textContent = this.theme === 'light' ? '🌙' : '☀️';
-        }
+        ].forEach(modal => {
+            if (modal) modal.classList.add('hidden');
+        });
     }
 
     /**
@@ -1186,6 +1170,7 @@ class GameUI {
             this.elements.musicToggle.textContent = this.musicEnabled ? '🎵' : '🔇';
         }
         
+        this.applyTheme();
         this.saveSettings();
     }
 
