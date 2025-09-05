@@ -17,7 +17,6 @@ class GameUI {
         this.touchEndPos = null;
         
         this.initializeEventListeners();
-        this.applyTheme();
         this.setupAudio();
     }
 
@@ -1170,7 +1169,6 @@ class GameUI {
             this.elements.musicToggle.textContent = this.musicEnabled ? '🎵' : '🔇';
         }
         
-        this.applyTheme();
         this.saveSettings();
     }
 
@@ -1194,6 +1192,23 @@ class GameUI {
             } catch (e) {
                 // Audio element not available
             }
+        }
+    }
+
+    /**
+     * Apply theme to UI elements
+     */
+    applyTheme() {
+        const isDark = this.theme === 'dark';
+        document.body.classList.toggle('dark-theme', isDark);
+        
+        if (this.elements.themeToggle) {
+            this.elements.themeToggle.textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const welcomeToggle = document.getElementById('themeToggleWelcome');
+        if (welcomeToggle) {
+            welcomeToggle.textContent = isDark ? '☀️ Toggle Theme' : '🌙 Toggle Theme';
         }
     }
 
