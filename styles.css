@@ -161,15 +161,17 @@ body {
 .game-board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 6px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 4px;
+    width: min(80vw, 500px);
+    height: min(80vw, 500px);
+    margin: 20px auto;
+    padding: 10px;
+    background: var(--bg-secondary);
     border-radius: var(--border-radius-lg);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    max-width: min(95vw, 500px);
-    width: 95vw;
-    margin: 0 auto;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    aspect-ratio: 1;
 }
 
 .emoji-tile {
@@ -798,49 +800,77 @@ body {
 
 /* Extra small screens */
 @media (max-width: 390px) {
+    .container {
+        padding: 3px;
+    }
+    
+    .header {
+        padding: 3px 5px;
+        margin-bottom: 3px;
+    }
+    
     .game-board {
-        width: 90vw;
-        height: 90vw;
-        max-width: 320px;
-        max-height: 320px;
+        width: 95vw;
+        height: 55vh;
+        max-width: 350px;
+        max-height: 350px;
+        margin: 3px auto;
     }
     
     .game-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 4px;
-        margin-bottom: 8px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        margin-bottom: 3px;
     }
     
     .stat-item {
-        padding: 6px 2px;
+        padding: 3px 1px;
+        border-radius: 6px;
     }
     
     .stat-label {
-        font-size: 9px;
+        font-size: 7px;
+        margin-bottom: 1px;
     }
     
     .stat-value {
-        font-size: 12px;
+        font-size: 10px;
     }
     
     .game-title {
-        font-size: 16px;
+        font-size: 14px;
     }
     
     .theme-toggle .btn, .audio-btn {
-        padding: 4px 6px;
-        font-size: 12px;
-        min-width: 28px;
+        padding: 3px 5px;
+        font-size: 10px;
+        min-width: 24px;
     }
     
     .emoji-tile {
-        font-size: clamp(24px, 7vw, 32px);
-        min-height: 45px;
+        font-size: clamp(20px, 6vw, 28px);
+        min-height: 40px;
     }
     
     .game-board {
+        gap: 1px;
+        padding: 2px;
+    }
+    
+    .powerups-container {
+        margin: 3px 0;
+        padding: 3px;
+    }
+    
+    .powerup-item {
+        padding: 3px;
         gap: 2px;
-        padding: 4px;
+        font-size: 10px;
+    }
+    
+    .progress-container {
+        margin: 3px 0;
+        padding: 0 5px;
     }
 }
 

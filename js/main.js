@@ -347,9 +347,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             const game = new EmojiCrushGame();
                             const ui = new GameUI(game);
                             game.startNewGame('normal', emojiMode);
-                            ui.updateBoard();
-                            ui.updateUI();
-                            console.log('Game started successfully');
+                            
+                            // Ensure board is rendered
+                            const boardElement = document.getElementById('game-board');
+                            if (boardElement && game.board && game.board.grid) {
+                                ui.updateBoard();
+                                ui.updateUI();
+                                console.log('Game started successfully with mode:', emojiMode);
+                            } else {
+                                console.error('Board element or game board not found');
+                            }
                         } catch (error) {
                             console.error('Error starting game:', error);
                         }
