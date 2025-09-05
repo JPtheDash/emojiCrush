@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             // Ensure board is rendered
                             const boardElement = document.getElementById('game-board');
                             if (boardElement && game.board && game.board.grid) {
-                                ui.updateBoard();
+                                ui.renderBoard();
                                 ui.updateUI();
                                 console.log('Game started successfully with mode:', emojiMode);
                             } else {

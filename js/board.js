@@ -37,6 +37,9 @@ class GameBoard {
      * Ensures no initial matches exist
      */
     init() {
+        console.log('Initializing board with size:', this.size);
+        console.log('Available emojis:', this.emojis);
+        
         this.grid = [];
         for (let row = 0; row < this.size; row++) {
             this.grid[row] = [];
@@ -45,8 +48,12 @@ class GameBoard {
             }
         }
         
+        console.log('Grid after initialization:', this.grid);
+        
         // Ensure no initial matches
         this.removeInitialMatches();
+        
+        console.log('Grid after removing initial matches:', this.grid);
     }
 
     /**

@@ -151,6 +151,11 @@ class EmojiCrushGame {
         this.loadLevel(1);
         this.board.init();
         
+        // Debug logging
+        console.log('Board initialized:', this.board);
+        console.log('Board grid:', this.board.grid);
+        console.log('Board size:', this.board.size);
+        
         if (mode === 'timed') {
             this.timeLeft = 60;
             this.startTimer();
