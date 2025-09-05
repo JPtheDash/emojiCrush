@@ -11,21 +11,58 @@
 </head>
 <body>
     <div class="game-container">
-        <!-- Header -->
-        <header class="game-header">
-            <div class="header-left">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="welcome-screen">
+            <div class="welcome-content">
+                <h1 class="welcome-title">🎮 Emoji Crush</h1>
+                <p class="welcome-subtitle">Choose your emoji style and start matching!</p>
+                
+                <div class="game-mode-selection">
+                    <div class="mode-option" data-mode="faces">
+                        <div class="mode-preview">
+                            <span class="preview-emoji">😀</span>
+                            <span class="preview-emoji">😍</span>
+                            <span class="preview-emoji">🤔</span>
+                            <span class="preview-emoji">😎</span>
+                        </div>
+                        <h3>Face Emojis</h3>
+                        <p>Match expressive face emojis</p>
+                        <button class="btn btn-primary mode-btn">Play with Faces</button>
+                    </div>
+                    
+                    <div class="mode-option" data-mode="regular">
+                        <div class="mode-preview">
+                            <span class="preview-emoji">🍎</span>
+                            <span class="preview-emoji">🍌</span>
+                            <span class="preview-emoji">🍇</span>
+                            <span class="preview-emoji">🍓</span>
+                        </div>
+                        <h3>Regular Emojis</h3>
+                        <p>Match fruits and objects</p>
+                        <button class="btn btn-primary mode-btn">Play with Objects</button>
+                    </div>
+                </div>
+                
+                <div class="theme-toggle-welcome">
+                    <button id="themeToggleWelcome" class="btn btn-secondary">🌙 Toggle Theme</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="gameContainer" style="display: none;">
+            <!-- Header -->
+            <header class="header">
                 <h1 class="game-title">🎮 Emoji Crush</h1>
                 <div class="theme-toggle">
-                    <button id="theme-toggle" class="theme-btn">🌙</button>
+                    <button id="themeToggle" class="btn btn-secondary">🌙</button>
                 </div>
-            </div>
-            <div class="header-right">
-                <div class="audio-controls">
-                    <button id="music-toggle" class="audio-btn">🎵</button>
-                    <button id="sound-toggle" class="audio-btn">🔊</button>
+                <div class="header-right">
+                    <div class="audio-controls">
+                        <button id="music-toggle" class="audio-btn">🎵</button>
+                        <button id="sound-toggle" class="audio-btn">🔊</button>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
         <!-- Game Stats -->
         <div class="game-stats">
@@ -206,6 +243,7 @@
     <script src="js/match.js"></script>
     <script src="js/game.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/welcome.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

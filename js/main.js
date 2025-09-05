@@ -314,20 +314,16 @@ class EmojiCrushApp {
 let emojiCrushApp = null;
 
 /**
- * Initialize the application when DOM is loaded
+ * Initialize game when DOM is loaded
  */
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     try {
-        emojiCrushApp = new EmojiCrushApp();
-        await emojiCrushApp.init();
+        const game = new EmojiCrushGame();
+        const ui = new GameUI(game);
+        const welcome = new WelcomeScreen(game, ui);
         
-        // Add global event listeners
-        window.addEventListener('resize', () => emojiCrushApp.handleResize());
-        window.addEventListener('visibilitychange', () => emojiCrushApp.handleVisibilityChange());
-        
-        // Add to global scope for debugging
-        window.emojiCrushApp = emojiCrushApp;
-        
+        // Show welcome screen initially
+        welcome.show();
         console.log('🎮 Emoji Crush initialized successfully!');
         
     } catch (error) {

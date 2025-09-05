@@ -39,7 +39,8 @@ class EmojiCrushGame {
         }
         
         // Initialize game objects last
-        this.board = new GameBoard(8);
+        this.emojiMode = 'regular'; // Default mode
+        this.board = new GameBoard(8, this.emojiMode);
         this.matchDetector = new MatchDetector(this.board);
     }
 
@@ -123,8 +124,9 @@ class EmojiCrushGame {
     /**
      * Start new game
      */
-    startNewGame(mode = 'normal') {
+    startNewGame(mode = 'normal', emojiMode = 'regular') {
         this.gameMode = mode;
+        this.emojiMode = emojiMode;
         this.gameState = 'playing';
         this.score = 0;
         this.level = 1;
@@ -133,6 +135,9 @@ class EmojiCrushGame {
         this.activePowerUp = null;
         this.moveHistory = [];
         this.matchDetector.resetComboMultiplier();
+        
+        // Update board emoji mode
+        this.board.setEmojiMode(emojiMode);
         
         this.loadLevel(1);
         this.board.init();
