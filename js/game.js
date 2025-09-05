@@ -38,10 +38,10 @@ class EmojiCrushGame {
             this.achievements = {};
         }
         
-        // Initialize game objects last
+        // Initialize game objects last - but don't start game yet
         this.emojiMode = 'regular'; // Default mode
-        this.board = new GameBoard(8, this.emojiMode);
-        this.matchDetector = new MatchDetector(this.board);
+        this.board = null; // Will be initialized when game starts
+        this.matchDetector = null;
     }
 
     /**
@@ -134,10 +134,19 @@ class EmojiCrushGame {
         this.isProcessing = false;
         this.activePowerUp = null;
         this.moveHistory = [];
-        this.matchDetector.resetComboMultiplier();
         
-        // Update board emoji mode
-        this.board.setEmojiMode(emojiMode);
+        // Initialize board and match detector if not already done
+        if (!this.board) {
+            this.board = new GameBoard(8, emojiMode);
+        } else {
+            this.board.setEmojiMode(emojiMode);
+        }
+        
+        if (!this.matchDetector) {
+            this.matchDetector = new MatchDetector(this.board);
+        }
+        
+        this.matchDetector.resetComboMultiplier();
         
         this.loadLevel(1);
         this.board.init();

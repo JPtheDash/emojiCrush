@@ -17,12 +17,28 @@ class WelcomeScreen {
     }
 
     setupEventListeners() {
+        // Check if elements exist first
+        if (!this.welcomeScreen || !this.gameContainer) {
+            console.error('Welcome screen elements not found');
+            return;
+        }
+
         // Mode selection buttons
         const modeButtons = document.querySelectorAll('.mode-btn');
+        if (modeButtons.length === 0) {
+            console.error('Mode buttons not found');
+            return;
+        }
+        
         modeButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const modeOption = e.target.closest('.mode-option');
+                if (!modeOption) {
+                    console.error('Mode option not found');
+                    return;
+                }
                 const emojiMode = modeOption.dataset.mode;
+                console.log('Mode selected:', emojiMode);
                 this.startGame(emojiMode);
             });
         });

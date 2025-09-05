@@ -318,9 +318,30 @@ let emojiCrushApp = null;
  */
 document.addEventListener('DOMContentLoaded', () => {
     try {
+        console.log('DOM loaded, initializing game...');
+        
+        // Check if required elements exist
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const gameContainer = document.getElementById('gameContainer');
+        
+        if (!welcomeScreen) {
+            console.error('Welcome screen element not found');
+            return;
+        }
+        
+        if (!gameContainer) {
+            console.error('Game container element not found');
+            return;
+        }
+        
         const game = new EmojiCrushGame();
+        console.log('Game created');
+        
         const ui = new GameUI(game);
+        console.log('UI created');
+        
         const welcome = new WelcomeScreen(game, ui);
+        console.log('Welcome screen created');
         
         // Show welcome screen initially
         welcome.show();
@@ -328,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
     } catch (error) {
         console.error('Failed to initialize Emoji Crush:', error);
+        console.error('Error stack:', error.stack);
     }
 });
 
