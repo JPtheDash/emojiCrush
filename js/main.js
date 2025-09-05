@@ -317,39 +317,48 @@ let emojiCrushApp = null;
  * Initialize game when DOM is loaded
  */
 document.addEventListener('DOMContentLoaded', () => {
-    try {
-        console.log('DOM loaded, initializing game...');
+    console.log('DOM loaded, starting initialization...');
+    
+    // Simple test - just show welcome screen without complex initialization
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen) {
+        welcomeScreen.style.display = 'flex';
+        console.log('Welcome screen shown');
         
-        // Check if required elements exist
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        const gameContainer = document.getElementById('gameContainer');
-        
-        if (!welcomeScreen) {
-            console.error('Welcome screen element not found');
-            return;
-        }
-        
-        if (!gameContainer) {
-            console.error('Game container element not found');
-            return;
-        }
-        
-        const game = new EmojiCrushGame();
-        console.log('Game created');
-        
-        const ui = new GameUI(game);
-        console.log('UI created');
-        
-        const welcome = new WelcomeScreen(game, ui);
-        console.log('Welcome screen created');
-        
-        // Show welcome screen initially
-        welcome.show();
-        console.log('🎮 Emoji Crush initialized successfully!');
-        
-    } catch (error) {
-        console.error('Failed to initialize Emoji Crush:', error);
-        console.error('Error stack:', error.stack);
+        // Add simple click handlers directly
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        modeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const modeOption = e.target.closest('.mode-option');
+                const emojiMode = modeOption ? modeOption.dataset.mode : 'regular';
+                console.log('Starting game with mode:', emojiMode);
+                
+                // Hide welcome screen
+                welcomeScreen.style.display = 'none';
+                
+                // Show game container
+                const gameContainer = document.getElementById('gameContainer');
+                if (gameContainer) {
+                    gameContainer.style.display = 'block';
+                    
+                    // Initialize game after showing container
+                    setTimeout(() => {
+                        try {
+                            const game = new EmojiCrushGame();
+                            const ui = new GameUI(game);
+                            game.startNewGame('normal', emojiMode);
+                            ui.updateBoard();
+                            ui.updateUI();
+                            console.log('Game started successfully');
+                        } catch (error) {
+                            console.error('Error starting game:', error);
+                        }
+                    }, 100);
+                }
+            });
+        });
+    } else {
+        console.error('Welcome screen not found');
     }
 });
 
