@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Crush - Match & Crush Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <h1 class="game-title">🎮 Emoji Crush</h1>
+                <div class="theme-toggle">
+                    <button id="theme-toggle" class="theme-btn">🌙</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="audio-controls">
+                    <button id="music-toggle" class="audio-btn">🎵</button>
+                    <button id="sound-toggle" class="audio-btn">🔊</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Stats -->
+        <div class="game-stats">
+            <div class="stat-item">
+                <span class="stat-label">Level</span>
+                <span id="level-display" class="stat-value">1</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Score</span>
+                <span id="score-display" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Moves</span>
+                <span id="moves-display" class="stat-value">30</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Goal</span>
+                <span id="goal-display" class="stat-value">1000</span>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="game-board-container">
+            <div id="game-board" class="game-board"></div>
+            
+            <!-- Combo Display -->
+            <div id="combo-display" class="combo-display hidden">
+                <span class="combo-text">COMBO!</span>
+                <span id="combo-multiplier" class="combo-multiplier">x2</span>
+            </div>
+        </div>
+
+        <!-- Power-ups -->
+        <div class="powerups-container">
+            <div class="powerup-item" id="hammer-powerup">
+                <div class="powerup-icon">🔨</div>
+                <div class="powerup-count" id="hammer-count">3</div>
+            </div>
+            <div class="powerup-item" id="shuffle-powerup">
+                <div class="powerup-icon">🔄</div>
+                <div class="powerup-count" id="shuffle-count">2</div>
+            </div>
+            <div class="powerup-item" id="undo-powerup">
+                <div class="powerup-icon">↩️</div>
+                <div class="powerup-count" id="undo-count">5</div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-label">Level Progress</div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Game Over!</h2>
+            <div class="modal-stats">
+                <p>Final Score: <span id="final-score">0</span></p>
+                <p>Level Reached: <span id="final-level">1</span></p>
+                <p id="high-score-message" class="high-score hidden">🎉 New High Score!</p>
+            </div>
+            <div class="modal-buttons">
+                <button id="restart-game" class="btn btn-primary">Play Again</button>
+                <button id="main-menu" class="btn btn-secondary">Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Complete Modal -->
+    <div id="level-complete-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Level Complete! 🎉</h2>
+            <div class="modal-stats">
+                <p>Score: <span id="level-score">0</span></p>
+                <p>Bonus: <span id="level-bonus">0</span></p>
+                <div class="stars-display" id="stars-display">
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="next-level" class="btn btn-primary">Next Level</button>
+                <button id="replay-level" class="btn btn-secondary">Replay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pause-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Game Paused</h2>
+            <div class="modal-buttons">
+                <button id="resume-game" class="btn btn-primary">Resume</button>
+                <button id="restart-level" class="btn btn-secondary">Restart Level</button>
+                <button id="quit-game" class="btn btn-danger">Quit Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>How to Play</h2>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <span class="instruction-icon">🔄</span>
+                    <span>Swap adjacent emojis to create matches of 3 or more</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">⚡</span>
+                    <span>Match 4 creates a striped emoji (clears row/column)</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">💎</span>
+                    <span>Match 5 creates a rainbow emoji (clears all of same type)</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">💥</span>
+                    <span>L/T-shaped matches create bomb emojis (3x3 explosion)</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">🔨</span>
+                    <span>Use power-ups strategically to clear difficult levels</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="close-instructions" class="btn btn-primary">Got It!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-emoji">🎮</div>
+            <div class="loading-text">Loading Emoji Crush...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="pause-btn" class="control-btn">⏸️</button>
+        <button id="help-btn" class="control-btn">❓</button>
+        <button id="settings-btn" class="control-btn">⚙️</button>
+    </div>
+
+    <!-- Audio Elements (commented out to prevent 404 errors) -->
+    <!--
+    <audio id="background-music" loop>
+        <source src="audio/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="match-sound">
+        <source src="audio/match.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="combo-sound">
+        <source src="audio/combo.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="special-sound">
+        <source src="audio/special.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="victory-sound">
+        <source src="audio/victory.mp3" type="audio/mpeg">
+    </audio>
+    -->
+
+    <!-- Scripts -->
+    <script src="js/board.js"></script>
+    <script src="js/match.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
