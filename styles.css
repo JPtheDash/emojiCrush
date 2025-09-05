@@ -878,12 +878,17 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    overflow-y: auto;
+    padding: 20px 0;
 }
 
 .welcome-content {
     text-align: center;
     max-width: 600px;
+    width: 100%;
     padding: 20px;
+    margin: auto;
+    min-height: fit-content;
 }
 
 .welcome-title {
@@ -895,22 +900,22 @@ body {
 }
 
 .welcome-subtitle {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
     color: var(--text-secondary);
-    margin-bottom: 40px;
+    margin-bottom: clamp(20px, 5vh, 40px);
 }
 
 .game-mode-selection {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(15px, 4vw, 30px);
+    margin-bottom: clamp(20px, 5vh, 40px);
 }
 
 .mode-option {
     background: var(--bg-secondary);
     border-radius: 20px;
-    padding: 30px 20px;
+    padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
     text-align: center;
     transition: all 0.3s ease;
     border: 3px solid transparent;
@@ -931,31 +936,32 @@ body {
 }
 
 .preview-emoji {
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
     animation: bounce 2s infinite;
     animation-delay: calc(var(--i, 0) * 0.2s);
 }
 
 .mode-option h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
     color: var(--text-primary);
     margin-bottom: 10px;
 }
 
 .mode-option p {
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin-bottom: clamp(15px, 4vw, 20px);
+    font-size: clamp(0.9rem, 3vw, 1rem);
 }
 
 .mode-btn {
     width: 100%;
-    padding: 15px 30px;
-    font-size: 1.1rem;
+    padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px);
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
     font-weight: 600;
 }
 
 .theme-toggle-welcome {
-    margin-top: 30px;
+    margin-top: clamp(20px, 4vh, 30px);
 }
 
 @keyframes bounce {
@@ -972,17 +978,145 @@ body {
 
 /* Mobile adjustments for welcome screen */
 @media (max-width: 768px) {
+    .welcome-screen {
+        padding: 10px 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    
+    .welcome-content {
+        padding: 15px;
+        margin-top: 20px;
+    }
+    
+    .welcome-title {
+        margin-bottom: 15px;
+    }
+    
+    .welcome-subtitle {
+        margin-bottom: 25px;
+    }
+    
     .game-mode-selection {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
+        margin-bottom: 25px;
     }
     
     .mode-option {
-        padding: 25px 15px;
+        padding: 20px 15px;
+    }
+    
+    .mode-preview {
+        margin-bottom: 15px;
+        gap: 8px;
     }
     
     .preview-emoji {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 480px) {
+    .welcome-screen {
+        padding: 5px 0;
+    }
+    
+    .welcome-content {
+        padding: 10px;
+        margin-top: 10px;
+    }
+    
+    .welcome-title {
+        margin-bottom: 10px;
+    }
+    
+    .welcome-subtitle {
+        margin-bottom: 20px;
+    }
+    
+    .game-mode-selection {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .mode-option {
+        padding: 15px 10px;
+        border-radius: 15px;
+    }
+    
+    .mode-preview {
+        margin-bottom: 12px;
+        gap: 6px;
+    }
+    
+    .preview-emoji {
+        font-size: 1.5rem;
+    }
+    
+    .theme-toggle-welcome {
+        margin-top: 15px;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 600px) and (orientation: landscape) {
+    .welcome-screen {
+        align-items: flex-start;
+        padding: 5px 0;
+    }
+    
+    .welcome-content {
+        margin-top: 10px;
+        padding: 10px;
+    }
+    
+    .welcome-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        margin-bottom: 8px;
+    }
+    
+    .welcome-subtitle {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+    
+    .game-mode-selection {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .mode-option {
+        padding: 12px 8px;
+    }
+    
+    .mode-preview {
+        margin-bottom: 8px;
+    }
+    
+    .preview-emoji {
+        font-size: 1.3rem;
+    }
+    
+    .mode-option h3 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    
+    .mode-option p {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .mode-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .theme-toggle-welcome {
+        margin-top: 10px;
     }
 }
 
