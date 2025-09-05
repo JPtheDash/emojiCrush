@@ -50,8 +50,8 @@ class EmojiCrushGame {
         const configs = [];
         
         for (let i = 1; i <= 50; i++) {
-            const baseGoal = 500 + (i * 250);
-            const baseMoves = Math.max(15, 35 - Math.floor(i / 3));
+            const baseGoal = 1000 + (i * 500); // Increased base goal significantly
+            const baseMoves = Math.max(20, 40 - Math.floor(i / 5)); // More moves, slower decrease
             
             configs.push({
                 level: i,
@@ -156,6 +156,12 @@ class EmojiCrushGame {
         this.goal = config.goal;
         this.moves = config.moves;
         this.timeLeft = config.specialRequirements.timeLimit || 0;
+        
+        console.log(`Loading Level ${levelNumber}:`, {
+            goal: this.goal,
+            moves: this.moves,
+            timeLimit: this.timeLeft
+        });
         
         if (this.timeLeft > 0) {
             this.startTimer();
@@ -417,7 +423,10 @@ class EmojiCrushGame {
      * Check if game should end
      */
     checkGameEnd() {
+        console.log('Checking game end - Score:', this.score, 'Goal:', this.goal, 'Level:', this.level);
+        
         if (this.score >= this.goal) {
+            console.log('Level complete! Score reached goal.');
             this.completeLevel();
         } else if (this.moves <= 0 && !this.hasValidMoves()) {
             this.endGame('noMoves');
