@@ -733,6 +733,22 @@ class GameUI {
      * Render the game board
      */
     renderBoard() {
+        console.log('renderBoard called');
+        console.log('boardElement:', this.boardElement);
+        console.log('game.board:', this.game.board);
+        console.log('game.board.size:', this.game.board?.size);
+        console.log('game.board.grid:', this.game.board?.grid);
+        
+        if (!this.boardElement) {
+            console.error('Board element not found');
+            return;
+        }
+        
+        if (!this.game.board || !this.game.board.grid) {
+            console.error('Game board or grid not initialized');
+            return;
+        }
+        
         this.boardElement.innerHTML = '';
         
         for (let row = 0; row < this.game.board.size; row++) {
@@ -741,6 +757,8 @@ class GameUI {
                 this.boardElement.appendChild(tile);
             }
         }
+        
+        console.log('Board rendered with', this.game.board.size * this.game.board.size, 'tiles');
     }
 
     /**
@@ -1240,14 +1258,11 @@ class GameUI {
      * Initialize the UI
      */
     initialize() {
-        this.showLoading();
-        
-        // Simulate loading time
-        setTimeout(() => {
-            this.hideLoading();
-            this.renderBoard();
-            this.updateUI();
-        }, 2000);
+        console.log('UI initialize called');
+        this.applyTheme();
+        this.renderBoard();
+        this.updateUI();
+        console.log('UI initialization complete');
     }
 }
 

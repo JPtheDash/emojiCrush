@@ -148,13 +148,8 @@ class EmojiCrushGame {
         this.loadLevel(1);
         this.board.init();
         
-        // Try to load saved game state
-        if (!this.loadGameState()) {
-            // No saved state, start fresh
-            console.log('Starting new game');
-        } else {
-            console.log('Loaded saved game state');
-        }
+        // Don't load saved state on new game start - always start fresh
+        console.log('Starting new game');
         
         // Debug logging
         console.log('Board initialized:', this.board);
@@ -732,6 +727,40 @@ class EmojiCrushGame {
             console.warn('Could not load high score:', e);
             return 0;
         }
+    }
+
+    /**
+     * Load game state from localStorage (for resuming games)
+     */
+    loadSavedGame() {
+        try {
+            const saved = localStorage.getItem('fruitCrushGameState');
+            if (saved) {
+                const gameState = JSON.parse(saved);
+                // Only load if saved within last 24 hours
+                if (Date.now() - gameState.timestamp < 24 * 60 * 60 * 1000) {
+                    this.score = gameState.score || 0;
+                    this.level = gameState.level || 1;
+                    this.moves = gameState.moves || 30;
+                    this.goal = gameState.goal || 200;
+                    this.gameState = gameState.gameState || 'playing';
+                    this.selectedTile = gameState.selectedTile || null;
+                    this.isProcessing = gameState.isProcessing || false;
+                    
+                    // Load level configuration for the saved level
+                    this.loadLevel(this.level);
+                    
+                    if (gameState.board && this.board) {
+                        this.board.grid = gameState.board;
+                    }
+                    
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.warn('Error loading game state:', e);
+        }
+        return false;
     }
 
     /**

@@ -342,12 +342,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Initialize game after showing container
                     setTimeout(() => {
                         try {
+                            console.log('Initializing game...');
                             const game = new EmojiCrushGame();
+                            console.log('Game created:', game);
+                            
                             const ui = new GameUI(game);
+                            console.log('UI created:', ui);
+                            
                             game.startNewGame('normal');
+                            console.log('Game started, board:', game.board);
+                            
+                            // Initialize UI first
+                            ui.initialize();
+                            console.log('UI initialized');
                             
                             // Ensure board is rendered
                             const boardElement = document.getElementById('game-board');
+                            console.log('Board element:', boardElement);
+                            
                             if (boardElement && game.board && game.board.grid) {
                                 ui.renderBoard();
                                 ui.updateUI();
@@ -356,11 +368,16 @@ document.addEventListener('DOMContentLoaded', () => {
                                 window.gameUI = ui;
                                 
                                 console.log('Fruit Crush game started successfully');
+                                console.log('Board grid:', game.board.grid);
                             } else {
                                 console.error('Board element or game board not found');
+                                console.error('boardElement:', boardElement);
+                                console.error('game.board:', game.board);
+                                console.error('game.board.grid:', game.board?.grid);
                             }
                         } catch (error) {
                             console.error('Error starting game:', error);
+                            console.error('Error stack:', error.stack);
                         }
                     }, 100);
                 }
