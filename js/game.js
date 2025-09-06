@@ -353,8 +353,16 @@ class EmojiCrushGame {
      * Process cascading matches and animations
      */
     async processCascadingMatches() {
+        console.log('=== STARTING MATCH PROCESSING ===');
         let cascadeCount = 0;
         let totalScore = 0;
+
+        // Force UI update first
+        const ui = window.gameUI || document.gameUI;
+        if (ui) {
+            ui.updateBoard();
+            ui.updateUI();
+        }
 
         while (true) {
             // Find matches
@@ -362,12 +370,14 @@ class EmojiCrushGame {
             const shapedMatches = this.matchDetector.findShapedMatches();
             const allMatches = [...matches, ...shapedMatches];
 
+            console.log(`Cascade ${cascadeCount + 1}: Found ${allMatches.length} matches`);
+
             if (allMatches.length === 0) {
+                console.log('No more matches found, stopping cascade');
                 break;
             }
 
             cascadeCount++;
-            console.log(`Processing cascade ${cascadeCount}, found ${allMatches.length} matches`);
             
             // Update combo multiplier
             this.matchDetector.updateComboMultiplier(true);
@@ -402,15 +412,13 @@ class EmojiCrushGame {
             this.board.applyGravity();
             this.board.fillEmpty();
 
-            // Update UI to show new board state immediately
-            const ui = window.gameUI || document.gameUI;
+            // Force UI update immediately after each cascade
             if (ui) {
                 ui.updateBoard();
                 ui.updateUI();
             }
 
-            // Very small delay for visual feedback
-            await this.delay(100);
+            console.log(`Cascade ${cascadeCount} complete, checking for more matches...`);
         }
 
         // Add score
@@ -419,7 +427,13 @@ class EmojiCrushGame {
         // Reset combo if no more matches
         this.matchDetector.updateComboMultiplier(false);
 
-        console.log(`Cascading complete: ${cascadeCount} cascades, ${totalScore} points`);
+        // Final UI update
+        if (ui) {
+            ui.updateBoard();
+            ui.updateUI();
+        }
+
+        console.log(`=== MATCH PROCESSING COMPLETE: ${cascadeCount} cascades, ${totalScore} points ===`);
         return { cascadeCount, totalScore };
     }
 

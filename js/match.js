@@ -25,7 +25,7 @@ class MatchDetector {
         for (let row = 0; row < this.board.size; row++) {
             for (let col = 0; col < this.board.size - 2; col++) {
                 const emoji = this.board.getEmoji(row, col);
-                if (!emoji || this.board.isSpecialEmoji(emoji)) continue;
+                if (!emoji || emoji === null || this.board.isSpecialEmoji(emoji)) continue;
 
                 let matchLength = 1;
                 let currentCol = col + 1;
