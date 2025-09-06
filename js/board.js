@@ -4,14 +4,9 @@
  */
 
 class GameBoard {
-    constructor(size = 8, emojiMode = 'regular') {
+    constructor(size = 8) {
         this.size = size;
-        this.emojiMode = emojiMode;
-        this.emojiSets = {
-            face: ['😊', '😄', '😢', '😭', '🤔'], // Only 5 face emojis: happy, smile, sad, cry, wondered
-            regular: ['🍎', '🍌', '🍇', '🍓', '🍒', '🥝', '🍑', '🍍']
-        };
-        this.emojis = this.emojiSets[emojiMode] || this.emojiSets.regular;
+        this.emojis = ['🍎', '🍌', '🍇', '🍓', '🍒', '🥝', '🍑', '🍍'];
         this.specialEmojis = {
             lightning: '⚡',
             rainbow: '🌈',
@@ -21,13 +16,6 @@ class GameBoard {
         this.init();
     }
 
-    /**
-     * Set emoji mode and update emoji set
-     */
-    setEmojiMode(mode) {
-        this.emojiMode = mode;
-        this.emojis = this.emojiSets[mode] || this.emojiSets.regular;
-    }
 
     /**
      * Initialize the game board with random emojis

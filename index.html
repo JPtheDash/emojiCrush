@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Emoji Crush - Match & Crush Game</title>
+    <title>Fruit Crush - Match & Crush Game</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,39 +12,33 @@
 <body>
     <div class="game-container">
         <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="welcome-screen" style="display: flex;">
+        <div class="welcome-screen" id="welcomeScreen">
             <div class="welcome-content">
-                <h1 class="welcome-title">🎮 Emoji Crush</h1>
-                <p class="welcome-subtitle">Choose your emoji style and start matching!</p>
+                <h1 class="welcome-title">🍎 Fruit Crush</h1>
+                <p class="welcome-subtitle">Match delicious fruits and crush your way to victory!</p>
                 
-                <div class="game-mode-selection">
-                    <div class="mode-option" data-mode="faces">
-                        <div class="mode-preview">
-                            <span class="preview-emoji">😀</span>
-                            <span class="preview-emoji">😍</span>
-                            <span class="preview-emoji">🤔</span>
-                            <span class="preview-emoji">😎</span>
-                        </div>
-                        <h3>Face Emojis</h3>
-                        <p>Match expressive face emojis</p>
-                        <button class="btn btn-primary mode-btn">Play with Faces</button>
+                <div class="fruit-preview">
+                    <div class="fruit-showcase">
+                        <span class="preview-emoji bounce">🍎</span>
+                        <span class="preview-emoji bounce">🍌</span>
+                        <span class="preview-emoji bounce">🍇</span>
+                        <span class="preview-emoji bounce">🍓</span>
+                        <span class="preview-emoji bounce">🍒</span>
                     </div>
-                    
-                    <div class="mode-option" data-mode="regular">
-                        <div class="mode-preview">
-                            <span class="preview-emoji">🍎</span>
-                            <span class="preview-emoji">🍌</span>
-                            <span class="preview-emoji">🍇</span>
-                            <span class="preview-emoji">🍓</span>
-                        </div>
-                        <h3>Regular Emojis</h3>
-                        <p>Match fruits and objects</p>
-                        <button class="btn btn-primary mode-btn">Play with Objects</button>
-                    </div>
+                    <p class="fruit-description">Match 3 or more fruits to clear them and score points!</p>
                 </div>
                 
-                <div class="theme-toggle-welcome">
-                    <button id="themeToggleWelcome" class="btn btn-secondary">🌙 Toggle Theme</button>
+                <div class="start-game-section">
+                    <button class="start-game-btn" data-mode="regular">
+                        🎮 Start Playing
+                    </button>
+                </div>
+                
+                <div class="welcome-controls">
+                    <button class="theme-toggle" id="welcomeThemeToggle">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-text">Dark Mode</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -52,7 +46,7 @@
         <div class="container" id="gameContainer" style="display: none;">
             <!-- Header -->
             <header class="header">
-                <h1 class="game-title">🎮 Emoji Crush</h1>
+                <h1 class="game-title">🍎 Fruit Crush</h1>
                 <div class="theme-toggle">
                     <button id="themeToggle" class="btn btn-secondary">🌙</button>
                 </div>

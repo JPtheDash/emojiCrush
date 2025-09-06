@@ -325,13 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeScreen.style.display = 'flex';
         console.log('Welcome screen shown');
         
-        // Add simple click handlers directly
-        const modeButtons = document.querySelectorAll('.mode-btn');
-        modeButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const modeOption = e.target.closest('.mode-option');
-                const emojiMode = modeOption ? modeOption.dataset.mode : 'regular';
-                console.log('Starting game with mode:', emojiMode);
+        // Add click event listener to start game button
+        const startGameBtn = document.querySelector('.start-game-btn');
+        if (startGameBtn) {
+            startGameBtn.addEventListener('click', function() {
+                console.log('Starting Fruit Crush game');
                 
                 // Hide welcome screen
                 welcomeScreen.style.display = 'none';
@@ -346,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         try {
                             const game = new EmojiCrushGame();
                             const ui = new GameUI(game);
-                            game.startNewGame('normal', emojiMode);
+                            game.startNewGame('normal');
                             
                             // Ensure board is rendered
                             const boardElement = document.getElementById('game-board');
@@ -357,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 // Store UI reference globally for game logic access
                                 window.gameUI = ui;
                                 
-                                console.log('Game started successfully with mode:', emojiMode);
+                                console.log('Fruit Crush game started successfully');
                             } else {
                                 console.error('Board element or game board not found');
                             }
@@ -367,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 100);
                 }
             });
-        });
+        }
     } else {
         console.error('Welcome screen not found');
     }

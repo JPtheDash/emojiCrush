@@ -39,7 +39,6 @@ class EmojiCrushGame {
         }
         
         // Initialize game objects last - but don't start game yet
-        this.emojiMode = 'regular'; // Default mode
         this.board = null; // Will be initialized when game starts
         this.matchDetector = null;
     }
@@ -125,9 +124,8 @@ class EmojiCrushGame {
     /**
      * Start new game
      */
-    startNewGame(mode = 'normal', emojiMode = 'regular') {
+    startNewGame(mode = 'normal') {
         this.gameMode = mode;
-        this.emojiMode = emojiMode;
         this.gameState = 'playing';
         this.score = 0;
         this.level = 1;
@@ -138,9 +136,7 @@ class EmojiCrushGame {
         
         // Initialize board and match detector if not already done
         if (!this.board) {
-            this.board = new GameBoard(8, emojiMode);
-        } else {
-            this.board.setEmojiMode(emojiMode);
+            this.board = new GameBoard(8);
         }
         
         if (!this.matchDetector) {
@@ -151,6 +147,14 @@ class EmojiCrushGame {
         
         this.loadLevel(1);
         this.board.init();
+        
+        // Try to load saved game state
+        if (!this.loadGameState()) {
+            // No saved state, start fresh
+            console.log('Starting new game');
+        } else {
+            console.log('Loaded saved game state');
+        }
         
         // Debug logging
         console.log('Board initialized:', this.board);
@@ -341,6 +345,9 @@ class EmojiCrushGame {
             ui.updateBoard();
             ui.updateUI();
         }
+        
+        // Save game state after processing
+        this.saveGameState();
         
         // Check win/lose conditions
         this.checkGameEnd();
@@ -771,32 +778,7 @@ class EmojiCrushGame {
         try {
             localStorage.setItem('emojiCrush_achievements', JSON.stringify(this.achievements));
         } catch (e) {
-            console.warn('Could not save achievements:', e);
+            console.warn('Error saving achievements:', e);
         }
     }
-
-    /**
-     * Utility delay function
-     */
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    /**
-     * Get current game state
-     */
-    getGameState() {
-        return {
-            state: this.gameState,
-            board: this.board.getState(),
-            progress: this.getProgress(),
-            selectedTile: this.selectedTile,
-            isProcessing: this.isProcessing
-        };
-    }
-}
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = EmojiCrushGame;
 }
