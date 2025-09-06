@@ -19,6 +19,7 @@ class MatchDetector {
         const visited = new Set();
 
         console.log('Finding matches on board...');
+        console.log('Current board state:', this.board.grid);
 
         // Find horizontal matches
         for (let row = 0; row < this.board.size; row++) {

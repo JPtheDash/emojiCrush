@@ -258,11 +258,14 @@ class GameBoard {
      * Remove emojis at specified positions
      */
     removeEmojis(positions) {
+        console.log('removeEmojis called with positions:', positions);
         positions.forEach(pos => {
             if (this.isValidPosition(pos.row, pos.col)) {
+                console.log(`Removing emoji at ${pos.row},${pos.col}: ${this.grid[pos.row][pos.col]}`);
                 this.grid[pos.row][pos.col] = null;
             }
         });
+        console.log('Grid after removal:', this.grid);
     }
 
     /**
