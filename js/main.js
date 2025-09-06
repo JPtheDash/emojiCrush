@@ -353,6 +353,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (boardElement && game.board && game.board.grid) {
                                 ui.renderBoard();
                                 ui.updateUI();
+                                
+                                // Store UI reference globally for game logic access
+                                window.gameUI = ui;
+                                
                                 console.log('Game started successfully with mode:', emojiMode);
                             } else {
                                 console.error('Board element or game board not found');

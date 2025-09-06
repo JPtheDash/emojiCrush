@@ -471,24 +471,21 @@ class GameUI {
         const deltaX = rect2.left - rect1.left;
         const deltaY = rect2.top - rect1.top;
         
-        // Swap the visual content immediately
-        const temp = tile1.textContent;
-        tile1.textContent = tile2.textContent;
-        tile2.textContent = temp;
-        
-        // Animate tiles moving to their new positions
+        // Don't swap visual content - let the game logic handle it
+        // Just animate the tiles moving
         tile1.style.transition = 'transform 0.3s ease-out';
         tile2.style.transition = 'transform 0.3s ease-out';
         tile1.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         tile2.style.transform = `translate(${-deltaX}px, ${-deltaY}px)`;
         
-        // Reset transform after animation
+        // Execute game logic immediately, then reset animation
+        if (callback) callback();
+        
         setTimeout(() => {
             tile1.style.transform = '';
             tile2.style.transform = '';
             tile1.style.transition = '';
             tile2.style.transition = '';
-            if (callback) callback();
         }, 300);
     }
 

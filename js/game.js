@@ -169,6 +169,12 @@ class EmojiCrushGame {
      * Highlight matched tiles for visual feedback before removal
      */
     async highlightMatchedTiles(positions) {
+        // Update board to show current state first
+        const ui = window.gameUI || document.gameUI;
+        if (ui) {
+            ui.updateBoard();
+        }
+        
         // Add highlight class to matched tiles
         positions.forEach(pos => {
             const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
