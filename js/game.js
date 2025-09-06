@@ -166,6 +166,30 @@ class EmojiCrushGame {
     }
 
     /**
+     * Highlight matched tiles for visual feedback before removal
+     */
+    async highlightMatchedTiles(positions) {
+        // Add highlight class to matched tiles
+        positions.forEach(pos => {
+            const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+            if (tile) {
+                tile.classList.add('matched');
+            }
+        });
+
+        // Wait for 500ms to show the match
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Remove highlight class
+        positions.forEach(pos => {
+            const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+            if (tile) {
+                tile.classList.remove('matched');
+            }
+        });
+    }
+
+    /**
      * Load specific level
      */
     loadLevel(levelNumber) {
@@ -339,8 +363,11 @@ class EmojiCrushGame {
             this.stats.totalSpecialEmojis += specialEmojis.length;
             this.stats.longestCombo = Math.max(this.stats.longestCombo, this.matchDetector.getComboMultiplier());
 
-            // Remove matched emojis
+            // Highlight matched emojis and wait before removing
             const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
+            await this.highlightMatchedTiles(allPositions);
+            
+            // Remove matched emojis after delay
             this.board.removeEmojis(allPositions);
 
             // Create special emojis before refilling
