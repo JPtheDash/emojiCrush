@@ -183,8 +183,8 @@ class EmojiCrushGame {
             }
         });
 
-        // Wait for 500ms to show the match
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Wait for 300ms to show the match (reduced from 500ms)
+        await new Promise(resolve => setTimeout(resolve, 300));
 
         // Remove highlight class
         positions.forEach(pos => {
@@ -387,8 +387,14 @@ class EmojiCrushGame {
             this.board.applyGravity();
             this.board.fillEmpty();
 
+            // Update UI to show new board state
+            const ui = window.gameUI || document.gameUI;
+            if (ui) {
+                ui.updateBoard();
+            }
+
             // Small delay for animation
-            await this.delay(300);
+            await this.delay(200);
         }
 
         // Add score
