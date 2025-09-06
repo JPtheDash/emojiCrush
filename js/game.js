@@ -411,15 +411,16 @@ class EmojiCrushGame {
             // Wait briefly to show highlight
             await this.delay(300);
 
-            // Remove highlight class and clear tiles
+            // Remove matched emojis from board
+            this.board.removeEmojis(allPositions);
+
+            // Remove highlight class after clearing
             allPositions.forEach(pos => {
                 const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
                 if (tile) {
                     tile.classList.remove('matched');
                 }
             });
-            
-            this.board.removeEmojis(allPositions);
 
             // Create special emojis before refilling
             for (const special of specialEmojis) {
@@ -436,11 +437,14 @@ class EmojiCrushGame {
 
             // Force UI update immediately after each cascade
             if (ui) {
-                ui.updateBoard();
+                ui.renderBoard();
                 ui.updateUI();
             }
 
             console.log(`Cascade ${cascadeCount} complete, checking for more matches...`);
+            
+            // Small delay between cascades to allow UI to update
+            await this.delay(100);
         }
 
         // Add score
@@ -451,11 +455,12 @@ class EmojiCrushGame {
 
         // Final UI update
         if (ui) {
-            ui.updateBoard();
+            ui.renderBoard();
             ui.updateUI();
         }
 
-        console.log(`=== MATCH PROCESSING COMPLETE: ${cascadeCount} cascades, ${totalScore} points ===`);
+        console.log(`=== MATCH PROCESSING COMPLETE ===`);
+        console.log(`Total cascades: ${cascadeCount}, Total score: ${totalScore}`);
         return { cascadeCount, totalScore };
     }
 

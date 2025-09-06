@@ -445,18 +445,10 @@ class GameUI {
                 const pos1 = { row, col };
                 const pos2 = { row: targetRow, col: targetCol };
                 
-                // Check if swap would create matches
-                const wouldCreateMatches = this.game.matchDetector.wouldCreateMatches(pos1, pos2);
-                
-                if (wouldCreateMatches) {
-                    // Valid swap - animate and execute
-                    this.animateVisualSwap(startTile, targetTile, () => {
-                        this.game.handleTileClick(targetRow, targetCol);
-                    });
-                } else {
-                    // Invalid swap - show bounce back animation
-                    this.animateBounceBack(startTile, targetTile);
-                }
+                // Always attempt the swap - let game logic handle validation
+                this.animateVisualSwap(startTile, targetTile, () => {
+                    this.game.handleTileClick(targetRow, targetCol);
+                });
             }
         }
     }
