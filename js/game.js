@@ -381,13 +381,21 @@ class EmojiCrushGame {
 
             cascadeCount++;
             
+            // Prevent infinite loops
+            if (cascadeCount > 10) {
+                console.warn('Breaking cascade loop at 10 iterations to prevent infinite loop');
+                break;
+            }
+            
             // Update combo multiplier
             this.matchDetector.updateComboMultiplier(true);
 
-            // Create special emojis
-            const specialEmojis = this.matchDetector.createSpecialEmojis(allMatches);
+            // Get all positions to remove
+            const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
+            console.log('Removing positions:', allPositions);
             
-            // Calculate score
+            // Calculate score before removing
+            const specialEmojis = this.matchDetector.createSpecialEmojis(allMatches);
             const scoreData = this.matchDetector.calculateScore(allMatches, specialEmojis);
             totalScore += scoreData.totalScore;
 
@@ -396,33 +404,10 @@ class EmojiCrushGame {
             this.stats.totalSpecialEmojis += specialEmojis.length;
             this.stats.longestCombo = Math.max(this.stats.longestCombo, this.matchDetector.getComboMultiplier());
 
-            // Highlight matched emojis before removing
-            const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
-            console.log('Highlighting and removing positions:', allPositions);
-            
-            // Add highlight class to matched tiles
-            allPositions.forEach(pos => {
-                const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
-                if (tile) {
-                    tile.classList.add('matched');
-                }
-            });
-
-            // Wait briefly to show highlight
-            await this.delay(300);
-
-            // Remove matched emojis from board
+            // Remove matched emojis immediately - no highlighting
             this.board.removeEmojis(allPositions);
 
-            // Remove highlight class after clearing
-            allPositions.forEach(pos => {
-                const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
-                if (tile) {
-                    tile.classList.remove('matched');
-                }
-            });
-
-            // Create special emojis before refilling
+            // Create special emojis at cleared positions
             for (const special of specialEmojis) {
                 this.board.createSpecialEmoji(
                     special.position.row, 
@@ -443,8 +428,8 @@ class EmojiCrushGame {
 
             console.log(`Cascade ${cascadeCount} complete, checking for more matches...`);
             
-            // Small delay between cascades to allow UI to update
-            await this.delay(100);
+            // Small delay between cascades
+            await this.delay(200);
         }
 
         // Add score

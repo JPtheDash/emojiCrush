@@ -20,6 +20,12 @@ class MatchDetector {
 
         console.log('Finding matches on board...');
         console.log('Current board state:', this.board.grid);
+        
+        // Check if board is valid
+        if (!this.board.grid || this.board.grid.length === 0) {
+            console.warn('Board grid is empty or invalid');
+            return matches;
+        }
 
         // Find horizontal matches
         for (let row = 0; row < this.board.size; row++) {
@@ -32,7 +38,8 @@ class MatchDetector {
 
                 // Count consecutive matching emojis
                 while (currentCol < this.board.size && 
-                       this.board.getEmoji(row, currentCol) === emoji) {
+                       this.board.getEmoji(row, currentCol) === emoji &&
+                       this.board.getEmoji(row, currentCol) !== null) {
                     matchLength++;
                     currentCol++;
                 }
@@ -70,14 +77,15 @@ class MatchDetector {
         for (let col = 0; col < this.board.size; col++) {
             for (let row = 0; row < this.board.size - 2; row++) {
                 const emoji = this.board.getEmoji(row, col);
-                if (!emoji || this.board.isSpecialEmoji(emoji)) continue;
+                if (!emoji || emoji === null || this.board.isSpecialEmoji(emoji)) continue;
 
                 let matchLength = 1;
                 let currentRow = row + 1;
 
                 // Count consecutive matching emojis
                 while (currentRow < this.board.size && 
-                       this.board.getEmoji(currentRow, col) === emoji) {
+                       this.board.getEmoji(currentRow, col) === emoji &&
+                       this.board.getEmoji(currentRow, col) !== null) {
                     matchLength++;
                     currentRow++;
                 }
