@@ -51,8 +51,9 @@ class EmojiCrushGame {
         const configs = [];
         
         for (let i = 1; i <= 50; i++) {
-            const baseGoal = 1000 + (i * 500); // Increased base goal significantly
-            const baseMoves = Math.max(20, 40 - Math.floor(i / 5)); // More moves, slower decrease
+            // Start very easy and gradually increase
+            const baseGoal = i === 1 ? 500 : 300 + (i * 200); // Much easier start
+            const baseMoves = i === 1 ? 50 : Math.max(15, 45 - Math.floor(i / 3)); // More moves for level 1
             
             configs.push({
                 level: i,
@@ -328,6 +329,13 @@ class EmojiCrushGame {
 
         this.isProcessing = false;
         
+        // Force UI update after processing
+        const ui = window.gameUI || document.gameUI;
+        if (ui) {
+            ui.updateBoard();
+            ui.updateUI();
+        }
+        
         // Check win/lose conditions
         this.checkGameEnd();
         
@@ -353,6 +361,7 @@ class EmojiCrushGame {
             }
 
             cascadeCount++;
+            console.log(`Processing cascade ${cascadeCount}, found ${allMatches.length} matches`);
             
             // Update combo multiplier
             this.matchDetector.updateComboMultiplier(true);
@@ -369,9 +378,9 @@ class EmojiCrushGame {
             this.stats.totalSpecialEmojis += specialEmojis.length;
             this.stats.longestCombo = Math.max(this.stats.longestCombo, this.matchDetector.getComboMultiplier());
 
-            // Highlight all matches before removing
+            // Remove matched emojis immediately
             const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
-            await this.highlightMatchedTiles(allPositions);
+            console.log('Removing positions:', allPositions);
             this.board.removeEmojis(allPositions);
 
             // Create special emojis before refilling
@@ -387,14 +396,15 @@ class EmojiCrushGame {
             this.board.applyGravity();
             this.board.fillEmpty();
 
-            // Update UI to show new board state
+            // Update UI to show new board state immediately
             const ui = window.gameUI || document.gameUI;
             if (ui) {
                 ui.updateBoard();
+                ui.updateUI();
             }
 
-            // Small delay for animation
-            await this.delay(200);
+            // Very small delay for visual feedback
+            await this.delay(100);
         }
 
         // Add score
@@ -403,6 +413,7 @@ class EmojiCrushGame {
         // Reset combo if no more matches
         this.matchDetector.updateComboMultiplier(false);
 
+        console.log(`Cascading complete: ${cascadeCount} cascades, ${totalScore} points`);
         return { cascadeCount, totalScore };
     }
 
