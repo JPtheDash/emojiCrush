@@ -304,22 +304,28 @@ class EmojiCrushGame {
             return false;
         }
 
-        // Check if swap creates matches
-        const wouldCreateMatches = this.matchDetector.wouldCreateMatches(pos1, pos2);
-        console.log('Would create matches:', wouldCreateMatches);
+        // Perform the swap first to check for matches
+        this.board.swapEmojis(pos1, pos2);
         
-        if (!wouldCreateMatches) {
-            // Invalid swap - animate rejection
-            console.log('Invalid swap - no matches created');
+        // Check for matches after swap
+        const matches = this.matchDetector.findMatches();
+        const shapedMatches = this.matchDetector.findShapedMatches();
+        const allMatches = [...matches, ...shapedMatches];
+        
+        console.log('Matches found after swap:', allMatches.length);
+        
+        if (allMatches.length === 0) {
+            // Invalid swap - revert and animate rejection
+            console.log('Invalid swap - no matches created, reverting');
+            this.board.swapEmojis(pos1, pos2); // Swap back
             return false;
         }
 
         // Save state for undo
         this.saveMove(pos1, pos2);
 
-        // Perform swap
-        console.log('Performing swap...');
-        this.board.swapEmojis(pos1, pos2);
+        // Don't swap again - already swapped above
+        console.log('Valid swap confirmed, processing matches...');
         this.moves--;
         this.selectedTile = null;
         this.isProcessing = true;
