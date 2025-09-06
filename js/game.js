@@ -394,9 +394,29 @@ class EmojiCrushGame {
             this.stats.totalSpecialEmojis += specialEmojis.length;
             this.stats.longestCombo = Math.max(this.stats.longestCombo, this.matchDetector.getComboMultiplier());
 
-            // Remove matched emojis immediately
+            // Highlight matched emojis before removing
             const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
-            console.log('Removing positions:', allPositions);
+            console.log('Highlighting and removing positions:', allPositions);
+            
+            // Add highlight class to matched tiles
+            allPositions.forEach(pos => {
+                const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                if (tile) {
+                    tile.classList.add('matched');
+                }
+            });
+
+            // Wait briefly to show highlight
+            await this.delay(300);
+
+            // Remove highlight class and clear tiles
+            allPositions.forEach(pos => {
+                const tile = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                if (tile) {
+                    tile.classList.remove('matched');
+                }
+            });
+            
             this.board.removeEmojis(allPositions);
 
             // Create special emojis before refilling
