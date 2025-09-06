@@ -323,17 +323,7 @@ class EmojiCrushGame {
         this.selectedTile = null;
         this.isProcessing = true;
 
-        // Find and highlight matches immediately after swap
-        const initialMatches = this.matchDetector.findMatches();
-        const initialShapedMatches = this.matchDetector.findShapedMatches();
-        const allInitialMatches = [...initialMatches, ...initialShapedMatches];
-        
-        if (allInitialMatches.length > 0) {
-            const initialPositions = this.matchDetector.getAllMatchPositions(allInitialMatches);
-            await this.highlightMatchedTiles(initialPositions);
-        }
-
-        // Process cascading matches
+        // Process cascading matches immediately
         await this.processCascadingMatches();
 
         this.isProcessing = false;
@@ -379,11 +369,9 @@ class EmojiCrushGame {
             this.stats.totalSpecialEmojis += specialEmojis.length;
             this.stats.longestCombo = Math.max(this.stats.longestCombo, this.matchDetector.getComboMultiplier());
 
-            // For cascading matches (not the initial swap), highlight before removing
+            // Highlight all matches before removing
             const allPositions = this.matchDetector.getAllMatchPositions(allMatches);
-            if (cascadeCount > 1) {
-                await this.highlightMatchedTiles(allPositions);
-            }
+            await this.highlightMatchedTiles(allPositions);
             this.board.removeEmojis(allPositions);
 
             // Create special emojis before refilling

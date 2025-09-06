@@ -172,6 +172,7 @@ body {
     box-shadow: var(--shadow-lg);
     position: relative;
     aspect-ratio: 1;
+    z-index: 10;
 }
 
 .emoji-tile {
@@ -396,6 +397,8 @@ body {
     justify-content: center;
     gap: 15px;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .powerup-item {
