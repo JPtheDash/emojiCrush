@@ -6,21 +6,18 @@
 class GameBoard {
     constructor(size = 8, emojiMode = 'regular') {
         this.size = size;
-        this.grid = [];
         this.emojiMode = emojiMode;
-        
-        // Define emoji sets
         this.emojiSets = {
-            regular: ['🍎', '🍌', '🍇', '🍓', '🥑', '🍊', '🍒', '🥝', '🍑', '🍕'],
-            faces: ['😀', '😍', '🤔', '😎', '🥳', '😊', '🤗', '😋', '🙂', '😌']
+            face: ['😊', '😄', '😢', '😭', '🤔'], // Only 5 face emojis: happy, smile, sad, cry, wondered
+            regular: ['🍎', '🍌', '🍇', '🍓', '🍒', '🥝', '🍑', '🍍']
         };
-        
         this.emojis = this.emojiSets[emojiMode] || this.emojiSets.regular;
         this.specialEmojis = {
-            striped: '⚡',
+            lightning: '⚡',
             rainbow: '🌈',
             bomb: '💥'
         };
+        this.grid = [];
         this.init();
     }
 

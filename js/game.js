@@ -51,9 +51,9 @@ class EmojiCrushGame {
         const configs = [];
         
         for (let i = 1; i <= 50; i++) {
-            // Start very easy and gradually increase
-            const baseGoal = i === 1 ? 500 : 300 + (i * 200); // Much easier start
-            const baseMoves = i === 1 ? 50 : Math.max(15, 45 - Math.floor(i / 3)); // More moves for level 1
+            // Start extremely easy and gradually increase
+            const baseGoal = i === 1 ? 200 : i === 2 ? 300 : 200 + (i * 150); // Much easier start
+            const baseMoves = i === 1 ? 60 : i === 2 ? 50 : Math.max(20, 50 - Math.floor(i / 2)); // Many more moves
             
             configs.push({
                 level: i,
