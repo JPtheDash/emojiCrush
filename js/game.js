@@ -330,9 +330,13 @@ class EmojiCrushGame {
         this.isProcessing = true;
 
         // Process cascading matches immediately
-        await this.processCascadingMatches();
-
-        this.isProcessing = false;
+        try {
+            await this.processCascadingMatches();
+        } catch (error) {
+            console.error('Error in processCascadingMatches:', error);
+        } finally {
+            this.isProcessing = false;
+        }
         
         // Force UI update after processing
         const ui = window.gameUI || document.gameUI;
@@ -429,7 +433,7 @@ class EmojiCrushGame {
             console.log(`Cascade ${cascadeCount} complete, checking for more matches...`);
             
             // Small delay between cascades
-            await this.delay(200);
+            await new Promise(resolve => setTimeout(resolve, 200));
         }
 
         // Add score
